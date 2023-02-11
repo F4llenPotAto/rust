@@ -15,15 +15,14 @@ fn main() {
 
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
-    // Result may be throw an error if the data isn't valid UTF-8, or if there 
-    // was a problem reading from the stream
-    // This is an ungraceful method of handling the possible errors.
     let http_request: Vec<_> = buf_reader
-        .lines() // lines method will split the stream of data whenver it sees a newline byte
-        .map(|result| result.unwrap()) // map and unwrap each result to get each string
-        .take_while(|line| !line.is_empty()) // identify end of the HTTP request by finding the
-                                             // first empty string
+        .lines()
+        .map(|result| result.unwrap()) 
+        .take_while(|line| !line.is_empty())
         .collect();
 
-    println!("Request: {:#?}", http_request);
+    // implement sending data in response to a client request.
+    let response = "HTTP/1.1 200 OK\r\n\r\n";
+
+    stream.write_all(response.as_bytes()).unwrap();
 }
