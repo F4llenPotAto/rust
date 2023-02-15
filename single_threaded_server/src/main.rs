@@ -6,7 +6,7 @@ use std::{
     time::Duration,
 };
 
-    use single_threaded_server::ThreadPool;
+use single_threaded_server::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
